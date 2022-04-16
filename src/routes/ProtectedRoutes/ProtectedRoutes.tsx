@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom"
-import { Navigate, Outlet } from "react-router-dom"
+import { Navigate } from "react-router-dom"
+import App from "../../App"
 
 
 const ProtectedRoutes = () => {
@@ -8,7 +9,7 @@ const ProtectedRoutes = () => {
   const isAuth = true
 
   return isAuth ? (
-    <Outlet />
+    <App />
   ) : (
     <Navigate to="/login" replace state={{ from: location }} />
   )

@@ -1,31 +1,46 @@
-import { MantineProvider } from "@mantine/core"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { useState } from "react";
 
-import Login from "./pages/Login"
-import ProtectedRoutes from "./routes/ProtectedRoutes"
+import { AppShell, Text, Aside, MediaQuery, Header, Burger, useMantineTheme } from "@mantine/core"
+import { Outlet } from "react-router-dom"
 
-import routes from "./routes"
+import Navbar from "./components/Navbar";
 
 function App() {
-
+  const theme = useMantineTheme();
+  const [opened, setOpened] = useState(false);
   return (
-    <MantineProvider withNormalizeCSS>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<ProtectedRoutes />}>
-              {routes.map((route, idx) => (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  element={<route.element />}
-                />
-              ))}
-            </Route>
-          </Routes>
-        </Router>
-    </MantineProvider>
+    <AppShell
+      fixed
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
+      header={  
+        <Header height={70} p="md">
+          <div className="flex items-center h-full" >
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
 
+            <Text>Billing Dashboard</Text>
+          </div>
+        </Header>
+      }
+      navbar={<Navbar opened={opened} />}
+      aside={
+        <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 300, lg: 400 }} >
+              <Text>Application sidebar</Text>
+          </Aside>
+        </MediaQuery>
+      }
+    >
+        <Outlet />
+    </AppShell>
   )
 }
 
