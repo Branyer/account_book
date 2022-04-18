@@ -28,7 +28,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     }`,
     borderRadius: theme.radius.sm,
     marginTop: 10,
-    "&:first-child": {
+    "&:first-of-type": {
       marginTop: 0,
     },
   },
@@ -123,6 +123,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
 
         return (
           <Accordion.Item
+            key={item.id}
             icon={
               <ThemeIcon color="indigo" variant="light">
                 <IconChevronDown size={20} />
