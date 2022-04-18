@@ -1,33 +1,37 @@
-import React from "react"
+import React from "react";
 
-import {   Navbar as MantineNavbar,  Stack } from "@mantine/core"
-import items from "./navbarItems"
-import NavbarItem from "../NavbarItem"
-import NavbarAvatar from "../NavbarAvatar"
+import { Navbar as MantineNavbar, Stack } from "@mantine/core";
+
+import NavbarItem from "../NavbarItem";
+import NavbarAvatar from "../NavbarAvatar";
+
+import items from "./navbarItems";
 
 interface NavbarProps {
-    opened: boolean
+  opened: boolean;
 }
 
-const Navbar : React.FC<NavbarProps> = ({opened}) => {
+const Navbar: React.FC<NavbarProps> = ({ opened }) => {
+  return (
+    <MantineNavbar
+      p="md"
+      hiddenBreakpoint="sm"
+      hidden={!opened}
+      width={{ sm: 200, lg: 300 }}
+    >
+      <MantineNavbar.Section grow>
+        <Stack>
+          {items.map((item) => (
+            <NavbarItem {...item} key={item.path} />
+          ))}
+        </Stack>
+      </MantineNavbar.Section>
 
-    return (
-        
-        <MantineNavbar p="md" hiddenBreakpoint="sm" hidden={!opened}  width={{ sm: 200, lg: 300 }} >
-              <MantineNavbar.Section grow>
-                <Stack>
-                    {
-                        items.map((item) => (<NavbarItem {...item} key={item.path}/>))
-                    }
-                </Stack>
-              </MantineNavbar.Section>
+      <MantineNavbar.Section>
+        <NavbarAvatar name="Branyer Vergara" />
+      </MantineNavbar.Section>
+    </MantineNavbar>
+  );
+};
 
-              <MantineNavbar.Section>
-                 <NavbarAvatar  name="Branyer Vergara"  />
-              </MantineNavbar.Section>
-          </MantineNavbar>
-    )
-
-}
-
-export default Navbar
+export default Navbar;
