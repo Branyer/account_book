@@ -10,13 +10,12 @@ import {
   Center,
   Badge,
   Box,
-  Stack,
-  Title,
 } from "@mantine/core";
 
 import { IconChevronDown } from "@tabler/icons";
 
 import DetailCell from "./DetailCell";
+import { formatter } from "../../../utils/formatter";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   item: {
@@ -116,7 +115,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
                 borderRadius: theme.defaultRadius,
               })}
             >
-              {item.amount} {item.currency}
+              {formatter(item.amount, { notation: 'compact', currency: item.currency, style: 'currency' })} 
             </Text>
           </DetailCell>
         );
@@ -131,7 +130,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
             }
             label={
               <SimpleGrid cols={4} sx={{ textAlign: "center" }}>
-                <Text>${item.amount}</Text>
+                <Text>{formatter(item.amount, { notation: 'compact' })}</Text>
                 <Text>{item.currency}</Text>
                 <Text>{item.date}</Text>
                 <Center>

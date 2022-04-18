@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { formatCompactNumber } from "../../utils/formatter";
+import { formatter } from "../../utils/formatter";
 import { getIntervalByBase } from "./getIntervalByBase";
 import { getPercentage } from "./getPercentage";
 
@@ -13,8 +13,8 @@ const useCalculateIntervals = (founds: number) => {
     if (founds >= 1) {
       const { start, end } = getIntervalByBase(founds, 10);
 
-      const formatedStart = formatCompactNumber(start);
-      const formatedEnd = formatCompactNumber(end);
+      const formatedStart = formatter(start, { notation: 'compact' });
+      const formatedEnd = formatter(end, { notation: 'compact'});
 
       const auxPercentage = getPercentage(start, end, founds);
 

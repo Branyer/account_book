@@ -13,7 +13,7 @@ const cols : string[] = [
 const rows : any[] = [
 
     {
-        amount: '220',
+        amount: '2200111',
         currency: 'COP',
         date: 'Aplir 16, 2022',
         type: 'withdrawal',

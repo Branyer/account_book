@@ -1,19 +1,15 @@
-export const formatCompactNumber = (value : number) => {
+// export const formatCompactNumber = (value : number) => {
 
-    return Intl.NumberFormat("en", {
-        notation: "compact",
-      }).format(value)
+//     return Intl.NumberFormat("en", {
+//         notation: "compact",
+//       }).format(value)
 
-}
+// }
 
-export const formatMoneyNumber = (value: number, currency: string) => {
+export const formatter = (value: number, options : Intl.NumberFormatOptions = {}) => {
 
   return Intl.NumberFormat("en-US", {
-    style: 'currency',
-    currency,
-    compactDisplay: "short",
-    maximumSignificantDigits: 3
+    ...options
   }).format(value)
-
 
 }

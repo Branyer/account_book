@@ -1,5 +1,5 @@
 import { Box, Grid, Badge, Text, Progress, MantineColor, Tooltip } from "@mantine/core";
-import { formatMoneyNumber } from "../../utils/formatter";
+import { formatter } from "../../utils/formatter";
 
 import useCalculateIntervals from "./useCalculateIntervals";
 
@@ -45,7 +45,7 @@ const FoundsProgressBar: React.FC<FoundsProgressBarProps> = ({
 
             <Grid.Col span={8}>
               <Tooltip
-                label={formatMoneyNumber(founds, currency)}
+                label={formatter(founds, { currency, style: 'currency' })}
                 className="w-full"
                 color={color}
                 placement="start"
