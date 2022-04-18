@@ -1,4 +1,12 @@
-import { Box, Grid, Badge, Text, Progress, MantineColor, Tooltip } from "@mantine/core";
+import {
+  Box,
+  Grid,
+  Badge,
+  Text,
+  Progress,
+  MantineColor,
+  Tooltip,
+} from "@mantine/core";
 import { formatter } from "../../utils/formatter";
 
 import useCalculateIntervals from "./useCalculateIntervals";
@@ -21,7 +29,10 @@ const FoundsProgressBar: React.FC<FoundsProgressBarProps> = ({
       p="lg"
       pt="xl"
       sx={(theme) => ({
-        backgroundColor: theme.colors[color][3],
+        backgroundColor:
+          theme.colorScheme === "light"
+            ? theme.colors[color][3]
+            : theme.colors[color][9],
         borderRadius: theme.defaultRadius,
       })}
     >
@@ -30,7 +41,14 @@ const FoundsProgressBar: React.FC<FoundsProgressBarProps> = ({
           size="xs"
           className="absolute"
           color={color}
-          sx={{ left: "calc(50% - 16px)", top: "-8px" }}
+          sx={(theme) => ({
+            left: "calc(50% - 16px)",
+            top: "-8px",
+            color:
+              theme.colorScheme === "light"
+                ? theme.colors[color][9]
+                : theme.colors[color][1],
+          })}
         >
           {currency}
         </Badge>
@@ -38,16 +56,30 @@ const FoundsProgressBar: React.FC<FoundsProgressBarProps> = ({
         {founds >= 1 ? (
           <>
             <Grid.Col span={2}>
-              <Text align="center" weight={600}>
+              <Text
+                align="center"
+                weight={600}
+                sx={(theme) => ({
+                  color:
+                    theme.colorScheme === "light"
+                      ? theme.colors[color][9]
+                      : theme.colors[color][1],
+                })}
+              >
                 {start}
               </Text>
             </Grid.Col>
 
             <Grid.Col span={8}>
               <Tooltip
-                label={formatter(founds, { currency, style: 'currency' })}
+                label={formatter(founds, {
+                  currency,
+                  style: "currency",
+                  maximumSignificantDigits: 3,
+                })}
                 className="w-full"
                 color={color}
+                
                 placement="start"
                 withArrow
                 transition="slide-left"
@@ -56,18 +88,36 @@ const FoundsProgressBar: React.FC<FoundsProgressBarProps> = ({
               >
                 <Progress size="lg" color={color} value={percentage} animate />
               </Tooltip>
-
             </Grid.Col>
 
             <Grid.Col span={2}>
-              <Text align="center" weight={600}>
+              <Text
+                align="center"
+                weight={600}
+                sx={(theme) => ({
+                  color:
+                    theme.colorScheme === "light"
+                      ? theme.colors[color][9]
+                      : theme.colors[color][1],
+                })}
+              >
                 {end}
               </Text>
             </Grid.Col>
           </>
         ) : (
           <Grid.Col>
-            <Text align="center" weight={600} mt="2px" color={color}>
+            <Text
+              align="center"
+              weight={600}
+              mt="2px"
+              sx={(theme) => ({
+                color:
+                  theme.colorScheme === "light"
+                    ? theme.colors[color][3]
+                    : theme.colors[color][9],
+              })}
+            >
               No founds
             </Text>
           </Grid.Col>

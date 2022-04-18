@@ -10,11 +10,15 @@ import Navbar from "./components/Navbar";
 import Aside from "./components/Aside";
 
 import NavbarProvider from "./components/Navbar/NavbarProvider";
+import { getTextColor } from "./utils/getColor";
 
 function App() {
   return (
     <NavbarProvider>
       <AppShell
+        sx={(theme) => ({
+          backgroundColor: theme.colorScheme === "light" ? 'white' : theme.colors.dark[7]
+        })}
         fixed
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"

@@ -11,7 +11,7 @@ const NavbarAvatar: React.FC<NavbarAvatarProps> = ({ name, image }) => {
     <Box
       p="sm"
       sx={(theme) => ({
-        backgroundColor: theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === "light" ? theme.colors.gray[1] : theme.colors.dark[8],
         borderRadius: theme.defaultRadius,
       })}
     >
@@ -19,7 +19,7 @@ const NavbarAvatar: React.FC<NavbarAvatarProps> = ({ name, image }) => {
         <Avatar src={image} radius="xl" />
         <Text
           sx={(theme) => ({
-            color: theme.colors.gray[7],
+            color: theme.colorScheme === "light" ? theme.colors.gray[7] : theme.colors.gray[3],
           })}
         >
           {name}

@@ -1,4 +1,6 @@
-import { Stack, Title, Box, Text, TitleOrder } from "@mantine/core";
+import { Stack, TitleOrder } from "@mantine/core";
+
+import Title from "../../../Title"
 
 interface DetailCellProps {
   order?: TitleOrder;
@@ -17,9 +19,7 @@ const DetailCell: React.FC<DetailCellProps> = ({
     <Stack align={alignTitle}>
       <Title
         order={order}
-        sx={(theme) => ({
-          color: theme.colors.indigo[3],
-        })}
+        color="indigo"
       >
         {title}
       </Title>

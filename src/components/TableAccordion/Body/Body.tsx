@@ -34,12 +34,12 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
   itemOpened: {
     [`& .${getRef("itemTitle")}`]: {
-      backgroundColor: theme.colors.indigo[6],
+      backgroundColor: theme.colorScheme === "light" ? theme.colors.indigo[6] : theme.colors.dark[8],
       "& > button": {
         color: theme.colors.gray[2],
       },
       "& > button:hover": {
-        backgroundColor: theme.colors.indigo[6],
+        backgroundColor: theme.colorScheme === "light" ? theme.colors.indigo[6] : theme.colors.dark[8],
       },
     },
   },
@@ -60,9 +60,9 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
             <Box
               p="lg"
               sx={(theme) => ({
-                backgroundColor: theme.colors.gray[1],
+                backgroundColor: theme.colorScheme === "light" ? theme.colors.gray[1] : theme.colors.dark[8],
                 borderRadius: theme.defaultRadius,
-                color: theme.colors.gray[7],
+                color: theme.colorScheme === "light" ? theme.colors.gray[7] : theme.colors.gray[3],
               })}
             >
               <Text>
@@ -105,12 +105,12 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
               sx={(theme) => ({
                 backgroundColor:
                   item.type === "deposit"
-                    ? theme.colors.lime[1]
-                    : theme.colors.red[1],
+                    ? theme.colorScheme === "light" ? theme.colors.lime[1] : 'rgba(102, 168, 15, 0.35)'
+                    : theme.colorScheme === "light" ? theme.colors.red[1] : 'rgba(224, 49, 49, 0.35)',
                 color:
                   item.type === "deposit"
-                    ? theme.colors.lime[6]
-                    : theme.colors.red[6],
+                    ? theme.colorScheme === "light" ? theme.colors.lime[6] : theme.colors.lime[1]
+                    : theme.colorScheme === "light" ? theme.colors.red[6] : theme.colors.red[2],
                 width: "fit-content",
                 borderRadius: theme.defaultRadius,
               })}
@@ -124,7 +124,9 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
           <Accordion.Item
             key={item.id}
             icon={
-              <ThemeIcon color="indigo" variant="light">
+              <ThemeIcon sx={(theme) => ({
+                color: theme.colorScheme === "light" ? theme.colors.indigo[6] : theme.colors.indigo[2]
+              })} variant="light">
                 <IconChevronDown size={20} />
               </ThemeIcon>
             }
@@ -152,7 +154,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
                 <Grid.Col span={3}>
                   <Box
                     sx={(theme) => ({
-                      borderLeft: `1px solid ${theme.colors.gray[2]}`,
+                      borderLeft: `1px solid ${theme.colorScheme === "light" ? theme.colors.gray[2] : theme.colors.gray[8]}`,
                       height: "100%",
                     })}
                   >

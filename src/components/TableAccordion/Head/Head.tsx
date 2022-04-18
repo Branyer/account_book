@@ -1,10 +1,11 @@
 import { Box, SimpleGrid, Text } from "@mantine/core";
+import { getTextColor } from "../../../utils/getColor";
 
 const Head: React.FC<{ data: string[] }> = ({ data }) => {
   return (
     <Box
       sx={(theme) => ({
-        backgroundColor: theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === "light" ? theme.colors.gray[3] : theme.colors.dark[9],
         borderRadius: theme.defaultRadius,
         padding: 5,
         textAlign: "center",
@@ -18,7 +19,9 @@ const Head: React.FC<{ data: string[] }> = ({ data }) => {
         }}
       >
         {data.map((item) => (
-          <Text key={item} weight={600} color="gray">
+          <Text key={item} weight={600} sx={ theme => ({
+            color: getTextColor(theme, 'gray')
+          }) }>
             {item}
           </Text>
         ))}

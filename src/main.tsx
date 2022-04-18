@@ -1,26 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { MantineProvider } from "@mantine/core"
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 import Login from "./pages/Login"
 import ProtectedRoutes from "./routes/ProtectedRoutes"
+import AppProviders from './components/AppProviders'
 
 import routes from "./routes"
+
 
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MantineProvider  
-      withNormalizeCSS
-      theme={
-        { 
-          fontFamily: 'Poppins',
-          defaultRadius: 8
-        }}
-    >
+    <AppProviders>
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -35,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             </Route>
           </Routes>
         </Router>
-    </MantineProvider>
+    </AppProviders>
+    
   </React.StrictMode>
 )

@@ -1,4 +1,6 @@
-import { Stack, Title } from "@mantine/core";
+import { Stack } from "@mantine/core";
+
+import Title from "../Title";
 
 import Head from "./Head";
 import Body from "./Body";
@@ -11,11 +13,7 @@ interface TableAccordionProps {
 const TableAccordion: React.FC<TableAccordionProps> = ({ rows, cols }) => {
   return (
     <Stack>
-      <Title
-        order={3}
-        pb="md"
-        sx={(theme) => ({ color: theme.colors.gray[8] })}
-      >
+      <Title pb="md">
         Account History
       </Title>
       <Head data={cols} />
