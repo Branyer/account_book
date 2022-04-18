@@ -5,12 +5,22 @@ import {
   ColorScheme,
 } from "@mantine/core";
 
+import {  useLocalStorage, useColorScheme } from '@mantine/hooks';
+
 interface AppProvidersProps {
   children: React.ReactNode;
 }
 
 const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+
+  const preferredColorScheme = useColorScheme();
+  
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: 'mantine-color-scheme',
+    defaultValue: preferredColorScheme,
+    getInitialValueInEffect: true,
+  });
+
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
