@@ -6,12 +6,13 @@ import NavbarItem from "../NavbarItem";
 import NavbarAvatar from "../NavbarAvatar";
 
 import items from "./navbarItems";
+import { useNavbarContext } from "./NavbarProvider/NavbarProvider";
 
-interface NavbarProps {
-  opened: boolean;
-}
 
-const Navbar: React.FC<NavbarProps> = ({ opened }) => {
+const Navbar = () => {
+
+  const {opened} = useNavbarContext()
+
   return (
     <MantineNavbar
       p="md"
