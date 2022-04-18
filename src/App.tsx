@@ -1,7 +1,16 @@
 import { useState } from "react";
 
-import { AppShell, Text, Aside, MediaQuery, Header, Burger, useMantineTheme } from "@mantine/core"
-import { Outlet } from "react-router-dom"
+import {
+  AppShell,
+  Text,
+  Aside,
+  MediaQuery,
+  Header,
+  Burger,
+  useMantineTheme,
+  ScrollArea,
+} from "@mantine/core";
+import { Outlet } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
@@ -13,10 +22,10 @@ function App() {
       fixed
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      header={  
+      header={
         <Header height={70} p="md">
-          <div className="flex items-center h-full" >
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+          <div className="flex items-center h-full">
+            <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Burger
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
@@ -32,16 +41,18 @@ function App() {
       }
       navbar={<Navbar opened={opened} />}
       aside={
-        <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 300, lg: 400 }} >
-              <Text>Application sidebar</Text>
+        <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 300, lg: 400 }}>
+            <Text>Application sidebar</Text>
           </Aside>
         </MediaQuery>
       }
     >
+      <ScrollArea p="xl" style={{ height: "calc(100vh - 103px)" }}>
         <Outlet />
+      </ScrollArea>
     </AppShell>
-  )
+  );
 }
 
-export default App
+export default App;

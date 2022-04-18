@@ -168,7 +168,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
   );
 
   return (
-    <Accordion iconPosition="right" classNames={classes} multiple>
+    <Accordion iconPosition="right" classNames={classes} >
       {buildBody(data)}
     </Accordion>
   );
