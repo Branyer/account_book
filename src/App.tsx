@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import Aside from "./components/Aside";
 
 import NavbarProvider from "./components/Navbar/NavbarProvider";
-import { getTextColor } from "./utils/getColor";
+
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         navbar={<Navbar />}
         aside={<Aside />}
       >
-        <ScrollArea p="xl" style={{ height: "calc(100vh - 103px)" }}>
+        <ScrollArea p="xl" style={{ height: "calc(100vh - 150px)" }}>
           <Outlet />
         </ScrollArea>
       </AppShell>

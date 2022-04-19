@@ -11,7 +11,7 @@ const rows: any[] = [
     amount: "2200111",
     currency: "COP",
     date: "Aplir 16, 2022",
-    type: "withdrawal",
+    type: "withdraw",
     description: "una descripcion",
     id: "12345",
   },

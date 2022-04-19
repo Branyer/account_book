@@ -1,8 +1,10 @@
-import { Card, Group, Text, Button, SegmentedControl } from "@mantine/core";
+import { Card, Group, Text, Button, SegmentedControl, Stack, useMantineTheme } from "@mantine/core";
 import { formatter } from "../../utils/formatter";
 
 const GlobalBalance = () => {
   const balance = formatter(150, { currency: "USD", style: "currency" });
+
+  const theme = useMantineTheme()
 
   return (
     <Card
@@ -17,27 +19,33 @@ const GlobalBalance = () => {
         }`,
       })}
     >
-      <Group className="justify-between">
-        <div>
-          <Text>Global Balance</Text>
-          <Text
-            weight={500}
-            sx={(_theme) => ({
-              fontSize: 40,
-            })}
-          >
-            {balance.split(".")[0]}
-            <sub className="bottom-0 text-base">.00</sub>
-          </Text>
-        </div>
-        <SegmentedControl 
-             data={[
-                { label: 'USD', value: 'USD' },
-                { label: 'COP', value: 'COP' },
-              ]}
-            
-        />
-      </Group>
+        <Stack>
+            <Group className="justify-between">
+                <div>
+                <Text>Global Balance</Text>
+                <Text
+                    weight={500}
+                    sx={(_theme) => ({
+                    fontSize: 40,
+                    })}
+                >
+                    {balance.split(".")[0]}
+                    <sub className="bottom-0 text-base">.00</sub>
+                </Text>
+                </div>
+                <SegmentedControl 
+                    data={[
+                        { label: 'USD', value: 'USD' },
+                        { label: 'COP', value: 'COP' },
+                    ]}
+                    
+                />
+            </Group>
+            <Group>
+                <Button color="green" variant={`${theme.colorScheme === 'light' ? 'filled' : 'outline'}`}>Deposit</Button>
+                <Button color="red" variant={`${theme.colorScheme === 'light' ? 'filled' : 'outline'}`}>Withdraw</Button>
+            </Group>
+        </Stack>
     </Card>
   );
 };
