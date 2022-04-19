@@ -14,7 +14,7 @@ const TableAccordion: React.FC<TableAccordionProps> = ({ rows, cols }) => {
   return (
     <Stack>
       <Title pb="md">
-        Account History
+        History
       </Title>
       <Head data={cols} />
       <Body data={rows} />
