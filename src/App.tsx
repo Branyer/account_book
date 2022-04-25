@@ -18,8 +18,6 @@ function App() {
 
   const snap = useSnapshot(auth)
   
-  console.log(snap.user, "useraa")
-
   return (
     <NavbarProvider>
       <AppShell

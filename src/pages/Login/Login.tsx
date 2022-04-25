@@ -13,6 +13,8 @@ import { useForm } from "@mantine/form";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
+  User,
 } from "firebase/auth";
 
 import { showNotification } from "@mantine/notifications";
@@ -24,17 +26,19 @@ import { useState } from "react";
 
 import auth from "../../states/auth";
 import { useSnapshot } from "valtio";
+import { FirebaseError } from "firebase/app";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const snap = useSnapshot(auth)
+  const snap = useSnapshot(auth);
   const from = useFrom();
 
   const form = useForm({
     initialValues: {
       email: "",
       password: "",
+      displayName: "",
       confirmPassword: "",
     },
     validate: {
@@ -47,12 +51,8 @@ const Login = () => {
   });
   const [loginOrRegister, setLoginOrRegister] = useState("Login");
 
-
-
-  if(snap.user) {
-
-    return  <Navigate to={from === "/login" ? '/' : from}  replace />;
-
+  if (snap.user) {
+    return <Navigate to={from === "/login" ? "/" : from} replace />;
   }
 
   return (
@@ -61,9 +61,7 @@ const Login = () => {
         style={{ height: "100%" }}
         sx={(theme) => ({
           backgroundColor:
-            theme.colorScheme == "dark"
-              ? theme.colors.dark[7]
-              : theme.white,
+            theme.colorScheme == "dark" ? theme.colors.dark[7] : theme.white,
         })}
       >
         <Paper
@@ -80,64 +78,36 @@ const Login = () => {
             {loginOrRegister}
           </Title>
           <form
-            onSubmit={form.onSubmit((values) => {
-              console.log(values);
+            onSubmit={form.onSubmit(async (values) => {
 
               if (loginOrRegister === "Login") {
-                signInWithEmailAndPassword(
-                  fireAuth,
-                  values.email,
-                  values.password
-                )
-                  .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    navigate(from === "/login" ? '/' : from, { replace: true });
-                  })
-                  .catch((error) => {
-                    const errorMessage = error.message;
-
-                    showNotification({
-                      title: "Error",
-                      message: errorMessage,
-                      styles: (theme) => ({
-                        root: {
-                          backgroundColor: theme.colors.red[6],
-                          borderColor: theme.colors.red[6],
-
-                          "&::before": { backgroundColor: theme.white },
-                        },
-
-                        title: { color: theme.white },
-                        description: { color: theme.white },
-                        closeButton: {
-                          color: theme.white,
-                          "&:hover": { backgroundColor: theme.colors.red[7] },
-                        },
-                      }),
-                    });
-                  });
+                
               } else {
-                createUserWithEmailAndPassword(
-                  fireAuth,
-                  values.email,
-                  values.password
-                )
-                  .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
+                try {
+                  await createUserWithEmailAndPassword(
+                    fireAuth,
+                    values.email,
+                    values.password
+                  );
 
-                    navigate(from === "/login" ? '/' : from, { replace: true });
-                    // ...
-                  })
-                  .catch((error) => {
-                    const errorMessage = error.message;
-                    showNotification({
-                      color: "red",
-                      title: "Error",
-                      message: errorMessage,
-                    });
+                  await updateProfile(fireAuth.currentUser as User, {
+                    displayName: values.displayName,
                   });
+
+                  auth.user = {
+                    ...auth.user,
+                    displayName: values.displayName,
+                  };
+
+                  navigate(from === "/login" ? "/" : from, { replace: true });
+                } catch (error: any) {
+                  const errorMessage = error?.message;
+                  showNotification({
+                    color: "red",
+                    title: "Error",
+                    message: errorMessage,
+                  });
+                }
               }
             })}
           >
@@ -149,6 +119,16 @@ const Login = () => {
                 placeholder="your@email.com"
                 {...form.getInputProps("email")}
               />
+
+              {loginOrRegister === "Register" ? (
+                <TextInput
+                  required={loginOrRegister === "Register"}
+                  label="Display Name"
+                  placeholder="Your Name"
+                  {...form.getInputProps("displayName")}
+                />
+              ) : null}
+
               <PasswordInput
                 label="Password"
                 required

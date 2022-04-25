@@ -3,7 +3,7 @@ import { auth as fireAuth } from "../firebase.config";
 import { onAuthStateChanged, User } from "firebase/auth";
 
 type Auth = {
-  user: User | null | undefined;
+  user: Partial<User> | null | undefined;
 };
 
 const initialValue: Auth = {
@@ -14,7 +14,16 @@ const auth = proxy( initialValue);
 
 onAuthStateChanged(fireAuth, (user) => {
 
-  auth.user = user
+  if(user) {
+    const { email, uid, displayName } = user
+
+    auth.user = {email, uid, displayName}
+  } else {
+
+    auth.user = user
+  }
+
+
 });
 
 export default auth;
