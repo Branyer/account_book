@@ -1,3 +1,3 @@
-import ProtectedRoutes from "./ProtectedRoutes"
+import {RequireAuth} from "./RequireAuth"
 
-export default ProtectedRoutes
+export default RequireAuth

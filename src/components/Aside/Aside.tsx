@@ -3,10 +3,10 @@ import { Aside as AsideMantine, MediaQuery, Stack } from "@mantine/core";
 import FoundsProgressBar from "../FoundsProgressBar";
 import Title from "../Title";
 
-const Aside = () => {
+const Aside = ({hidden} : {hidden: boolean}) => {
   return (
     <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-      <AsideMantine p="xl" hiddenBreakpoint="sm" width={{ sm: 300, lg: 400 }}>
+      <AsideMantine p="xl" hiddenBreakpoint="sm"  style={{visibility: hidden ? "hidden" : "visible"}} width={{ sm: 300, lg: 400 }}>
         <Stack>
           <Title py="md">Founds</Title>
           <FoundsProgressBar color="blue" currency="USD" founds={50} />

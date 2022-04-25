@@ -8,28 +8,53 @@ import routes from "../routes.config"
 import { LoadingOverlay } from "@mantine/core";
 import useCheckAuthStorage from "../../hooks/useCheckAuthStorage";
 import App from "../../App";
+import { RequireAuth } from "../ProtectedRoutes/RequireAuth";
+import Home from "../../pages/Home";
+import NotFound from "../../pages/NotFound";
+import { useSnapshot } from "valtio";
+import auth from "../../states/auth";
 
 
 export const RoutesComponents: React.FC = () => {
 
-  const isAuthStorageChecked = useCheckAuthStorage()
+  const snap = useSnapshot(auth)
 
   return (
     <Router>
       <Routes>
-        {isAuthStorageChecked
-            ?
-            <>
-                <Route path="/login" element={<Login />} />
-                <Route element={<ProtectedRoutes />}>
-                {routes.map((route, idx) => (
-                    <Route key={idx} path={route.path} element={<route.element />} />
-                ))}
-                </Route>
-            </>
-            :
-            <Route path="*" element={<App />} />
-        }
+          <Route element={<App />}>
+            {typeof snap.user !== 'undefined' ? 
+              <>
+                <Route path="/" element={
+                  <RequireAuth>
+                    <Home />
+                  </RequireAuth>
+                } />
+                
+                  <Route path="/login" element={<Login />} />
+
+                
+                  <Route path="*" element={<NotFound />} />
+
+                </>
+              :
+              <Route path="*" element={<LoadingOverlay  
+                
+                styles={(theme) => ({
+
+                  root: {
+                    '& div': {
+
+                      backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+                    }
+                  }
+
+
+                })}
+                visible={true}/>} />
+          }
+            
+          </Route>
       </Routes>
     </Router>
   );

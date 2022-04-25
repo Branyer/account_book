@@ -3,16 +3,23 @@ import {
   ScrollArea,
 } from "@mantine/core";
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Aside from "./components/Aside";
 
 import NavbarProvider from "./components/Navbar/NavbarProvider";
+import { useSnapshot } from "valtio";
+import auth from "./states/auth";
 
 
 function App() {
+
+  const snap = useSnapshot(auth)
+  
+  console.log(snap.user, "useraa")
+
   return (
     <NavbarProvider>
       <AppShell
@@ -23,11 +30,13 @@ function App() {
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         header={<Header />}
-        navbar={<Navbar />}
-        aside={<Aside />}
+        navbar={<Navbar hidden={!Boolean(snap.user) } />}
+        aside={<Aside hidden={!Boolean(snap.user)}/>}
       >
         <ScrollArea p="xl" style={{ height: "calc(100vh - 150px)" }}>
+         
           <Outlet />
+        
         </ScrollArea>
       </AppShell>
     </NavbarProvider>

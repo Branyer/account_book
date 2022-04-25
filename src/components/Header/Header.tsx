@@ -21,7 +21,7 @@ const Header = () => {
   const dark = colorScheme === "dark";
 
   return (
-    <HeaderMantine height={70} p="md">
+    <HeaderMantine height={70} p="md" >
       <div className="flex items-center h-full">
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
           <Burger
