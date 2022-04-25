@@ -10,7 +10,7 @@ const ProtectedRoutes = () => {
   const snap = useSnapshot(auth)
 
   const location = useLocation()
-  const isAuth = snap.authenticated
+  const isAuth = snap.user
 
   return isAuth ? (
     <App />

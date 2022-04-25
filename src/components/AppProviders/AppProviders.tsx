@@ -5,6 +5,7 @@ import {
 } from "@mantine/core";
 
 import { useLocalStorage, useColorScheme } from "@mantine/hooks";
+import { NotificationsProvider } from '@mantine/notifications';
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -35,7 +36,9 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
           colorScheme,
         }}
       >
-        {children}
+        <NotificationsProvider>
+          {children}
+        </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );
