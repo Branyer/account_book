@@ -10,7 +10,7 @@ const rows: any[] = [
   {
     amount: "2200111",
     currency: "COP",
-    date: "Aplir 16, 2022",
+    date: "April 16, 2022",
     type: "withdraw",
     description: "una descripcion",
     id: "12345",
@@ -19,7 +19,7 @@ const rows: any[] = [
     id: "2312421",
     amount: "120",
     currency: "USD",
-    date: "Aplir 11, 2022",
+    date: "April 11, 2022",
     type: "deposit",
     description: "una descripcion",
   },
@@ -27,7 +27,7 @@ const rows: any[] = [
     id: "12321421421",
     amount: "20",
     currency: "USD",
-    date: "Aplir 13, 2022",
+    date: "April 13, 2022",
     type: "deposit",
   },
 ];

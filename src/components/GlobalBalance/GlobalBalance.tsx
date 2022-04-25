@@ -11,12 +11,17 @@ const GlobalBalance = () => {
       p="xl"
       className="md:w-96 xs:w-full"
       mb="xl"
+  
       sx={(theme) => ({
         border: `1px solid ${
           theme.colorScheme === "light"
             ? theme.colors.gray[3]
             : theme.colors.gray[8]
         }`,
+        backgroundColor: theme.colorScheme === "light"
+        ? theme.colors.gray[1]
+        : theme.colors.dark[9]
+
       })}
     >
         <Stack>
