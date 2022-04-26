@@ -16,8 +16,12 @@ import { auth as fireAuth } from "../../firebase.config";
 import { useNavbarContext } from "../Navbar/NavbarProvider/NavbarProvider";
 import { useSnapshot } from "valtio";
 import auth from "../../states/auth";
+import { useQueryClient } from "react-query";
 
 const Header = () => {
+
+  const queryClient = useQueryClient()
+
   const theme = useMantineTheme();
   const { opened, setOpened } = useNavbarContext();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -47,7 +51,7 @@ const Header = () => {
                 onClick={() =>
                   signOut(fireAuth)
                     .then(() => {
-                      // Sign-out successful.
+                      queryClient.invalidateQueries("transactions")
                     })
                     .catch((error) => {
                       // An error happened.
