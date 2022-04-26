@@ -1,12 +1,13 @@
 import { Aside as AsideMantine, MediaQuery, Stack } from "@mantine/core";
 import { useQuery } from "react-query";
+import { useTransactions } from "../../hooks/useTransactions";
 
 import FoundsProgressBar from "../FoundsProgressBar";
 import Title from "../Title";
 
 const Aside = ({hidden} : {hidden: boolean}) => {
 
-  const query = useQuery("transactions")
+  const query = useTransactions()
 
   return (
     <MediaQuery smallerThan="sm" styles={{ display: "none" }}>

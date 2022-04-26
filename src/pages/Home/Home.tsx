@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useSnapshot } from "valtio";
 import GlobalBalance from "../../components/GlobalBalance";
 import TableAccordion from "../../components/TableAccordion";
+import { useTransactions } from "../../hooks/useTransactions";
 import auth from "../../states/auth";
 import { getTransactions } from "../../utils/firestoreUtils";
 
@@ -36,10 +37,7 @@ const rows: any[] = [
 ];
 
 const Home = () => {
-  const snap = useSnapshot(auth);
-  const query = useQuery("transactions", () =>
-    getTransactions(snap?.user?.uid as string)
-  );
+  const query = useTransactions()
 
   return (
     <>

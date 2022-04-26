@@ -10,6 +10,23 @@ import { customShowNotification } from "./showNotification";
 import { db } from "../firebase.config";
 
 export const getTransactions = async (uid: string) => {
+
+  if(!uid) {
+
+    return {
+      globalCOP: 0,
+      globalUSD: 0,
+      transactions: [],
+      amounts: {
+          cop: 0,
+          usd: 0
+      }
+    };
+
+  }
+
+
+
   const q = query(
     collection(db, "users", uid, "transactions"),
     orderBy("date", "desc")

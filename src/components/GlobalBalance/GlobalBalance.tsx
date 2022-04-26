@@ -17,9 +17,10 @@ import { useModals } from "@mantine/modals";
 import ActionModal from "../ActionModal";
 import Title from "../Title";
 import { useQuery } from "react-query";
+import { useTransactions } from "../../hooks/useTransactions";
 
 const GlobalBalance = () => {
-  const query = useQuery("transactions");
+  const query = useTransactions()
   const [currency, setCurrency] = useState("USD")
 
   const balance = formatter(query.isSuccess ? currency == "COP" ?  (query.data as any).globalCOP : (query.data as any).globalUSD : 0, {
