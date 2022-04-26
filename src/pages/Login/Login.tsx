@@ -18,7 +18,7 @@ import {
 } from "firebase/auth";
 
 import { showNotification } from "@mantine/notifications";
-import { auth as fireAuth } from "../../firebase.config";
+import { auth as fireAuth, db} from "../../firebase.config";
 
 import useFrom from "./useFrom";
 import Title from "../../components/Title";
@@ -26,7 +26,11 @@ import { useState } from "react";
 
 import auth from "../../states/auth";
 import { useSnapshot } from "valtio";
-import { FirebaseError } from "firebase/app";
+
+import {  doc, setDoc } from "firebase/firestore";
+import { customShowNotification } from "../../utils/showNotification";
+
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -81,14 +85,32 @@ const Login = () => {
             onSubmit={form.onSubmit(async (values) => {
 
               if (loginOrRegister === "Login") {
-                
-              } else {
                 try {
-                  await createUserWithEmailAndPassword(
+                  await signInWithEmailAndPassword(
                     fireAuth,
                     values.email,
                     values.password
                   );
+
+                  navigate(from === "/login" ? "/" : from, { replace: true });
+                 
+                  customShowNotification('green', "User logged in!")
+
+                } catch (error: any) {
+                  const errorMessage = error?.message;
+
+                  customShowNotification('red', errorMessage)
+
+                }
+              } else {
+                try {
+                  const userCredentials = await createUserWithEmailAndPassword(
+                    fireAuth,
+                    values.email,
+                    values.password
+                  );
+
+                  await setDoc(doc(db, "users", userCredentials.user.uid), {});
 
                   await updateProfile(fireAuth.currentUser as User, {
                     displayName: values.displayName,
@@ -100,13 +122,15 @@ const Login = () => {
                   };
 
                   navigate(from === "/login" ? "/" : from, { replace: true });
+
+                  customShowNotification('green', "You have registered successfully!")
+
+
                 } catch (error: any) {
                   const errorMessage = error?.message;
-                  showNotification({
-                    color: "red",
-                    title: "Error",
-                    message: errorMessage,
-                  });
+
+                  customShowNotification('red', errorMessage)
+
                 }
               }
             })}

@@ -112,10 +112,7 @@ const FoundsProgressBar: React.FC<FoundsProgressBarProps> = ({
               weight={600}
               mt="2px"
               sx={(theme) => ({
-                color:
-                  theme.colorScheme === "light"
-                    ? theme.colors[color][3]
-                    : theme.colors[color][9],
+                color: theme.white
               })}
             >
               No founds

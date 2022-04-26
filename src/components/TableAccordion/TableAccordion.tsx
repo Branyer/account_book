@@ -11,6 +11,8 @@ interface TableAccordionProps {
 }
 
 const TableAccordion: React.FC<TableAccordionProps> = ({ rows, cols }) => {
+  
+  
   return (
     <Stack>
       <Title pb="md">

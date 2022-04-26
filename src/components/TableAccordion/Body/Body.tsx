@@ -86,7 +86,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
 
         const dateCell = (
           <DetailCell title="Date">
-            <Text weight={500}>{item.date}</Text>
+            <Text weight={500}>{item.hour}</Text>
           </DetailCell>
         );
 

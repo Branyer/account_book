@@ -1,8 +1,11 @@
-
-
 import { Stack } from "@mantine/core";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { useSnapshot } from "valtio";
 import GlobalBalance from "../../components/GlobalBalance";
 import TableAccordion from "../../components/TableAccordion";
+import auth from "../../states/auth";
+import { getTransactions } from "../../utils/firestoreUtils";
 
 const cols: string[] = ["Amount", "Currency", "Date", "Type"];
 
@@ -33,13 +36,19 @@ const rows: any[] = [
 ];
 
 const Home = () => {
+  const snap = useSnapshot(auth);
+  const query = useQuery("transactions", () =>
+    getTransactions(snap?.user?.uid as string)
+  );
 
   return (
     <>
-    <Stack>
-      <GlobalBalance />
-      <TableAccordion cols={cols} rows={rows} />
-    </Stack>
+      <Stack>
+        <GlobalBalance />
+        {query.data ? (
+          <TableAccordion cols={cols} rows={query.data.transactions} />
+        ) : null}
+      </Stack>
     </>
   );
 };

@@ -10,20 +10,16 @@ const initialValue: Auth = {
   user: undefined,
 };
 
-const auth = proxy( initialValue);
+const auth = proxy(initialValue);
 
 onAuthStateChanged(fireAuth, (user) => {
+  if (user) {
+    const { email, uid, displayName } = user;
 
-  if(user) {
-    const { email, uid, displayName } = user
-
-    auth.user = {email, uid, displayName}
+    auth.user = { email, uid, displayName };
   } else {
-
-    auth.user = user
+    auth.user = user;
   }
-
-
 });
 
 export default auth;

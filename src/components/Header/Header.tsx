@@ -9,13 +9,13 @@ import {
 } from "@mantine/core";
 import { signOut } from "firebase/auth";
 
-import { auth } from "../../firebase.config";
-
 import Title from "../Title";
 
 import { Sun, MoonStars, Logout } from "tabler-icons-react";
-
+import { auth as fireAuth } from "../../firebase.config";
 import { useNavbarContext } from "../Navbar/NavbarProvider/NavbarProvider";
+import { useSnapshot } from "valtio";
+import auth from "../../states/auth";
 
 const Header = () => {
   const theme = useMantineTheme();
@@ -23,8 +23,10 @@ const Header = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
 
+  const snap = useSnapshot(auth);
+
   return (
-    <HeaderMantine height={70} p="md" >
+    <HeaderMantine height={70} p="md">
       <div className="flex items-center h-full">
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
           <Burger
@@ -38,19 +40,24 @@ const Header = () => {
         <Group className="justify-between w-full">
           <Title order={1}>Account Book</Title>
           <Group>
-            <ActionIcon
-              variant="outline"
-              color={"red"}
-              onClick={() => signOut(auth).then(() => {
-                // Sign-out successful.
-              }).catch((error) => {
-                // An error happened.
-              })
-            }
-              title="Logout"
-            >
-              <Logout size={18} />
-            </ActionIcon>
+            {snap.user ? (
+              <ActionIcon
+                variant="outline"
+                color={"red"}
+                onClick={() =>
+                  signOut(fireAuth)
+                    .then(() => {
+                      // Sign-out successful.
+                    })
+                    .catch((error) => {
+                      // An error happened.
+                    })
+                }
+                title="Logout"
+              >
+                <Logout size={18} />
+              </ActionIcon>
+            ) : null}
             <ActionIcon
               variant="outline"
               color={dark ? "yellow" : "blue"}

@@ -5,11 +5,29 @@ import {
 } from "@mantine/core";
 
 import { useLocalStorage, useColorScheme } from "@mantine/hooks";
+import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from '@mantine/notifications';
 
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
 interface AppProvidersProps {
   children: React.ReactNode;
 }
+
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity
+    },
+  }
+})
 
 const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   const preferredColorScheme = useColorScheme();
@@ -24,23 +42,28 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        withNormalizeCSS
-        theme={{
-          fontFamily: "Poppins",
-          defaultRadius: 8,
-          colorScheme,
-        }}
+    <QueryClientProvider client={queryClient}>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
       >
-        <NotificationsProvider>
-          {children}
-        </NotificationsProvider>
-      </MantineProvider>
-    </ColorSchemeProvider>
+        <MantineProvider
+          withNormalizeCSS
+          theme={{
+            fontFamily: "Poppins",
+            defaultRadius: 8,
+            colorScheme,
+          }}
+        >
+          <ModalsProvider>
+            <NotificationsProvider position="top-right">
+              {children}
+            </NotificationsProvider>
+          </ModalsProvider>
+        </MantineProvider>
+      </ColorSchemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
+    </QueryClientProvider>
   );
 };
 
