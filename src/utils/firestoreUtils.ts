@@ -25,9 +25,10 @@ export const getTransactions = async (uid: string) => {
     let date: Date = doc.data().date.toDate();
     const currency = doc.data().currency;
     const amount = doc.data().amount;
+    const type = doc.data().type;
 
-    if (currency === "COP") cop += parseInt(amount);
-    else usd += parseInt(amount);
+    if (currency === "COP") cop +=  type === "Deposit" ? parseInt(amount) : -parseInt(amount);
+    else usd += type === "Deposit" ? parseInt(amount) : -parseInt(amount);
 
     transactions.push({
       id: doc.id,
