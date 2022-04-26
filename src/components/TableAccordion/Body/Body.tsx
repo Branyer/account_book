@@ -75,7 +75,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
         const typeCell = (
           <DetailCell title="Type">
             <Badge
-              color={item.type === "deposit" ? "lime" : "red"}
+              color={item.type === "Deposit" ? "lime" : "red"}
               sx={{ width: "fit-content" }}
               size="lg"
             >
@@ -86,13 +86,13 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
 
         const dateCell = (
           <DetailCell title="Date">
-            <Text weight={500}>{item.hour}</Text>
+            <Text weight={500} size="sm">{item.hour}</Text>
           </DetailCell>
         );
 
         const idCell = (
           <DetailCell title="ID Number">
-            <Text weight={500}>{item.id}</Text>
+            <Text weight={500} size="sm">{item.id}</Text>
           </DetailCell>
         );
 
@@ -104,11 +104,11 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
               weight={700}
               sx={(theme) => ({
                 backgroundColor:
-                  item.type === "deposit"
+                  item.type === "Deposit"
                     ? theme.colorScheme === "light" ? theme.colors.lime[1] : 'rgba(102, 168, 15, 0.35)'
                     : theme.colorScheme === "light" ? theme.colors.red[1] : 'rgba(224, 49, 49, 0.35)',
                 color:
-                  item.type === "deposit"
+                  item.type === "Deposit"
                     ? theme.colorScheme === "light" ? theme.colors.lime[6] : theme.colors.lime[1]
                     : theme.colorScheme === "light" ? theme.colors.red[6] : theme.colors.red[2],
                 width: "fit-content",
@@ -136,7 +136,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
                 <Text>{item.currency}</Text>
                 <Text>{item.date}</Text>
                 <Center>
-                  <Badge sx={{ width: "fit-content" }}>{item.type}</Badge>
+                  <Badge sx={{ width: "fit-content" }} color={item.type === "Deposit" ? "lime" : "red"}>{item.type}</Badge>
                 </Center>
               </SimpleGrid>
             }

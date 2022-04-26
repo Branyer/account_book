@@ -19,8 +19,7 @@ import auth from "../../states/auth";
 import { useQueryClient } from "react-query";
 
 const Header = () => {
-
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const theme = useMantineTheme();
   const { opened, setOpened } = useNavbarContext();
@@ -32,15 +31,17 @@ const Header = () => {
   return (
     <HeaderMantine height={70} p="md">
       <div className="flex items-center h-full">
-        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-          <Burger
-            opened={opened}
-            onClick={() => setOpened((o) => !o)}
-            size="sm"
-            color={theme.colors.gray[6]}
-            mr="xl"
-          />
-        </MediaQuery>
+        {snap.user ? (
+          <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+            <Burger
+              opened={opened}
+              onClick={() => setOpened((o) => !o)}
+              size="sm"
+              color={theme.colors.gray[6]}
+              mr="xl"
+            />
+          </MediaQuery>
+        ) : null}
         <Group className="justify-between w-full">
           <Title order={1}>Account Book</Title>
           <Group>
@@ -51,7 +52,8 @@ const Header = () => {
                 onClick={() =>
                   signOut(fireAuth)
                     .then(() => {
-                      queryClient.invalidateQueries("transactions")
+                      queryClient.invalidateQueries("transactions");
+                      queryClient.clear();
                     })
                     .catch((error) => {
                       // An error happened.
