@@ -1,15 +1,11 @@
 import { useLocation } from "react-router-dom"
 import { Navigate } from "react-router-dom"
-import { useSnapshot } from "valtio";
-
-import auth from "../../states/auth"
+import { useAuth } from "../../hooks/useAuth";
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
-  let snap = useSnapshot(auth);
-  
+  let snap = useAuth()
 
   let location = useLocation();
-
 
   if (!snap.user) {
     // Redirect them to the /login page, but save the current location they were

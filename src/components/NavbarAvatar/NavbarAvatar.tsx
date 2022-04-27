@@ -2,15 +2,15 @@ import React from "react";
 import { Avatar, Group, Text, Box } from "@mantine/core";
 import { useSnapshot } from "valtio";
 import auth from "../../states/auth";
+import { useAuth } from "../../hooks/useAuth";
 
 interface NavbarAvatarProps {
-  name: string;
   image?: string;
 }
 
-const NavbarAvatar: React.FC<NavbarAvatarProps> = ({ name, image }) => {
+const NavbarAvatar: React.FC<NavbarAvatarProps> = ({ image }) => {
 
-  const snap = useSnapshot(auth)
+  const snap = useAuth()
 
   return (
     <Box

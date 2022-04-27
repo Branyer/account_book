@@ -10,27 +10,52 @@ import {
   Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { v4 as uuidv4 } from "uuid";
 
-import { useSnapshot } from "valtio";
-import auth from "../../states/auth";
 import { postTransaction } from "../../utils/firestoreUtils";
 import { useMutation, useQueryClient } from "react-query";
+import { useAuth } from "../../hooks/useAuth";
 
-export const ActionModal: React.FC<{ type: "Deposit" | "Withdraw", closeModal: () => void }> = ({
-  type,
-  closeModal
-}) => {
-  const theme = useMantineTheme();
-  const queryClient = useQueryClient();
-  const snap = useSnapshot(auth);
+export const ActionModal: React.FC<{
+  type: "Deposit" | "Withdraw";
+  closeModal: () => void;
+}> = ({ type, closeModal }) => {
   const [data, setData] = useState<string[]>([]);
+  const queryClient = useQueryClient();
+  const theme = useMantineTheme();
 
   const mutation = useMutation(
     (data: any) => postTransaction(data.values, data.uid),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries("transactions");
-        closeModal()
+      onMutate: async ({ values }) => {
+        await queryClient.cancelQueries(["transactions", snap.user?.uid]);
+
+        const previousTodos = queryClient.getQueryData([
+          "transactions",
+          snap.user?.uid,
+        ]);
+
+        queryClient.setQueryData(
+          ["transactions", snap.user?.uid],
+          (old: any) => {
+            return {
+              ...old,
+              transactions: [values, ...old.transactions],
+            };
+          }
+        );
+
+        return { previousTodos };
+      },
+      onError: (err, newTodo, context) => {
+        queryClient.setQueryData(
+          "transactions",
+          (context as any).previousTodos
+        );
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["transactions", snap.user?.uid]);
+        closeModal();
       },
     }
   );
@@ -42,12 +67,15 @@ export const ActionModal: React.FC<{ type: "Deposit" | "Withdraw", closeModal: (
       tags: [],
       type,
       description: "",
+      id: uuidv4(),
     },
   });
 
+  const snap = useAuth();
+
   return (
     <form
-      onSubmit={form.onSubmit( (values) => {
+      onSubmit={form.onSubmit((values) => {
         mutation.mutate({ values, uid: snap?.user?.uid });
       })}
     >

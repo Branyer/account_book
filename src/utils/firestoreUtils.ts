@@ -5,6 +5,8 @@ import {
   getDocs,
   query,
   orderBy,
+  setDoc,
+  doc,
 } from "firebase/firestore";
 import { customShowNotification } from "./showNotification";
 import { db } from "../firebase.config";
@@ -76,11 +78,18 @@ export const postTransaction = async (
     tags: never[];
     type: "Deposit" | "Withdraw";
     description: string;
+    id: string;
   },
   uid: string
 ) => {
-  await addDoc(collection(db, "users", uid as string, "transactions"), {
-    ...values,
+  const { amount, currency, tags, type, description, id } = values;
+
+  await setDoc(doc(db, "users", uid as string, "transactions", id), {
+    amount,
+    currency,
+    tags,
+    type,
+    description,
     date: Timestamp.now(),
   });
 

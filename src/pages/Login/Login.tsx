@@ -17,25 +17,22 @@ import {
   User,
 } from "firebase/auth";
 
-import { showNotification } from "@mantine/notifications";
-import { auth as fireAuth, db} from "../../firebase.config";
+import { auth as fireAuth, db } from "../../firebase.config";
 
 import useFrom from "./useFrom";
 import Title from "../../components/Title";
 import { useState } from "react";
 
 import auth from "../../states/auth";
-import { useSnapshot } from "valtio";
 
-import {  doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { customShowNotification } from "../../utils/showNotification";
-
-
+import { useAuth } from "../../hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const snap = useSnapshot(auth);
+  const snap = useAuth();
   const from = useFrom();
 
   const form = useForm({
@@ -83,7 +80,6 @@ const Login = () => {
           </Title>
           <form
             onSubmit={form.onSubmit(async (values) => {
-
               if (loginOrRegister === "Login") {
                 try {
                   await signInWithEmailAndPassword(
@@ -93,14 +89,12 @@ const Login = () => {
                   );
 
                   navigate(from === "/login" ? "/" : from, { replace: true });
-                 
-                  customShowNotification('green', "User logged in!")
 
+                  customShowNotification("green", "User logged in!");
                 } catch (error: any) {
                   const errorMessage = error?.message;
 
-                  customShowNotification('red', errorMessage)
-
+                  customShowNotification("red", errorMessage);
                 }
               } else {
                 try {
@@ -123,14 +117,14 @@ const Login = () => {
 
                   navigate(from === "/login" ? "/" : from, { replace: true });
 
-                  customShowNotification('green', "You have registered successfully!")
-
-
+                  customShowNotification(
+                    "green",
+                    "You have registered successfully!"
+                  );
                 } catch (error: any) {
                   const errorMessage = error?.message;
 
-                  customShowNotification('red', errorMessage)
-
+                  customShowNotification("red", errorMessage);
                 }
               }
             })}

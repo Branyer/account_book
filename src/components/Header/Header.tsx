@@ -14,9 +14,8 @@ import Title from "../Title";
 import { Sun, MoonStars, Logout } from "tabler-icons-react";
 import { auth as fireAuth } from "../../firebase.config";
 import { useNavbarContext } from "../Navbar/NavbarProvider/NavbarProvider";
-import { useSnapshot } from "valtio";
-import auth from "../../states/auth";
 import { useQueryClient } from "react-query";
+import { useAuth } from "../../hooks/useAuth";
 
 const Header = () => {
   const queryClient = useQueryClient();
@@ -26,7 +25,7 @@ const Header = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
 
-  const snap = useSnapshot(auth);
+  const snap = useAuth();
 
   return (
     <HeaderMantine height={70} p="md">
