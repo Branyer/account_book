@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import { postTransaction } from "../../utils/firestoreUtils";
 import { useMutation, useQueryClient } from "react-query";
 import { useAuth } from "../../hooks/useAuth";
+import { formatter } from "../../utils/formatter";
 
 export const ActionModal: React.FC<{
   type: "Deposit" | "Withdraw";
@@ -51,11 +52,11 @@ export const ActionModal: React.FC<{
         queryClient.setQueryData(
           "transactions",
           (context as any).previousTodos
-        );
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(["transactions", snap.user?.uid]);
-        closeModal();
+          );
+        },
+        onSettled: () => {
+          queryClient.invalidateQueries(["transactions", snap.user?.uid]);
+          closeModal();
       },
     }
   );
@@ -83,6 +84,12 @@ export const ActionModal: React.FC<{
         <NumberInput
           placeholder="0"
           label="Amount"
+          formatter={(value) =>
+        !Number.isNaN(parseFloat(value))
+          ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',').replace( /[^0-9,]+/g, '')
+          : '0'
+      }
+          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
           required
           {...form.getInputProps("amount")}
         />
@@ -115,7 +122,6 @@ export const ActionModal: React.FC<{
         <Textarea
           placeholder="A description..."
           label="Description"
-          required
           {...form.getInputProps("description")}
         />
 
