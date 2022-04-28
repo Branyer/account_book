@@ -92,9 +92,24 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
 
         const idCell = (
           <DetailCell title="ID Number">
-            <Text weight={500} size="sm">{item.id}</Text>
+            <Text weight={500} size="xs">{item.id}</Text>
           </DetailCell>
         );
+
+        const tagCell = (
+          <DetailCell title="Tags">
+            <SimpleGrid cols={3} >
+
+              {item.tags.map(tag => {
+
+                return (
+                  <Badge sx={{ width: "fit-content" }} size="sm">{tag}</Badge>
+                )
+
+              })}
+            </SimpleGrid>
+          </DetailCell>
+        )
 
         const amountCell = (
           <DetailCell title="Amount" alignTitle="center">
@@ -149,6 +164,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
                     {typeCell}
                     {dateCell}
                     {idCell}
+                    {tagCell}
                   </SimpleGrid>
                 </Grid.Col>
                 <Grid.Col span={3}>
