@@ -6,6 +6,8 @@ import {
   Burger,
   useMantineTheme,
   Group,
+  Text,
+  Image
 } from "@mantine/core";
 import { signOut } from "firebase/auth";
 
@@ -28,7 +30,7 @@ const Header = () => {
   const snap = useAuth();
 
   return (
-    <HeaderMantine height={70} p="md">
+    <HeaderMantine height={70} p="md" sx={{backgroundColor: 'white', border: "none"}}>
       <div className="flex items-center h-full">
         {snap.user ? (
           <MediaQuery largerThan="sm" styles={{ display: "none" }}>
@@ -42,7 +44,10 @@ const Header = () => {
           </MediaQuery>
         ) : null}
         <Group className="justify-between w-full">
-          <Title order={1}>Account Book</Title>
+          <Group align="flex-end">
+            <Title order={2} weight={500}>Account Book</Title>
+            <Image src="/images/icons/cerdo.svg" alt="logo" />
+          </Group>
           <Group>
             {snap.user ? (
               <ActionIcon

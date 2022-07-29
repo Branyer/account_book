@@ -5,16 +5,17 @@ import {
 
 import { getTextColor } from "../../utils/getColor";
 
-const Title: React.FC<TitleMantineProps> = ({
+const Title: React.FC<TitleMantineProps & {weight?: number}> = ({
   children,
   order = 3,
-  color = 'gray',
+  color = 'green',
+  weight = 700,
   ...props
 }) => {
   return (
     <TitleMantine
       order={order}
-      sx={(theme) => ({ color: getTextColor(theme, color) })}
+      sx={(theme) => ({ color: getTextColor(theme, color), fontWeight: weight })}
       {...props}
     >
       {children}

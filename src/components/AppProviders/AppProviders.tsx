@@ -39,12 +39,12 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   });
 
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+    setColorScheme("light");
 
   return (
     <QueryClientProvider client={queryClient}>
       <ColorSchemeProvider
-        colorScheme={colorScheme}
+        colorScheme={"light"}
         toggleColorScheme={toggleColorScheme}
       >
         <MantineProvider
@@ -53,6 +53,7 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
             fontFamily: "Poppins",
             defaultRadius: 8,
             colorScheme,
+            primaryColor: "green"
           }}
         >
           <ModalsProvider>

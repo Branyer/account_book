@@ -7,6 +7,7 @@ import {
   Group,
   Stack,
   SegmentedControl,
+  useMantineTheme,
 } from "@mantine/core";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
@@ -34,6 +35,7 @@ const Login = () => {
 
   const snap = useAuth();
   const from = useFrom();
+  const theme = useMantineTheme();
 
   const form = useForm({
     initialValues: {
@@ -61,23 +63,18 @@ const Login = () => {
       <Center
         style={{ height: "100%" }}
         sx={(theme) => ({
-          backgroundColor:
-            theme.colorScheme == "dark" ? theme.colors.dark[7] : theme.white,
+          backgroundColor: theme.white,
+          backgroundImage: "/images/backgrounds/back1.svg"
         })}
       >
         <Paper
           p="xl"
+          shadow="xl"
           sx={(theme) => ({
-            backgroundColor:
-              theme.colorScheme == "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[3],
+            padding: "70px 150px !important"
           })}
-          style={{ width: "350px" }}
+          style={{ width: "700px" }}
         >
-          <Title align="center" pb="lg">
-            {loginOrRegister}
-          </Title>
           <form
             onSubmit={form.onSubmit(async (values) => {
               if (loginOrRegister === "Login") {
@@ -130,6 +127,25 @@ const Login = () => {
             })}
           >
             <Stack>
+              <SegmentedControl
+                styles={{
+                  root: {
+                    backgroundColor: "#D9D9D9"
+                  },
+                  label: {
+
+                  },
+                  labelActive: 
+                  {
+                    backgroundColor: theme.colors.green[9],
+                    color: `${theme.white} !important`
+                  }
+                }}
+                value={loginOrRegister}
+                onChange={setLoginOrRegister}
+                data={["Login", "Register"]}
+              />
+              <Title align="center">{loginOrRegister}</Title>
               <TextInput
                 required
                 label="Email"
@@ -162,14 +178,9 @@ const Login = () => {
                 />
               ) : null}
 
-              <SegmentedControl
-                value={loginOrRegister}
-                onChange={setLoginOrRegister}
-                data={["Login", "Register"]}
-              />
               <Group position="center" mt="md">
-                <Button type="submit" variant="outline" color="indigo">
-                  Submit
+                <Button type="submit" variant="filled" sx={{backgroundColor: theme.colors.green[9]}} fullWidth>
+                  {loginOrRegister}
                 </Button>
               </Group>
             </Stack>
