@@ -1,9 +1,8 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { Box, Group, ThemeIcon, Text } from "@mantine/core";
+import { Box, Group, ThemeIcon, Text, MediaQuery } from "@mantine/core";
 import { Icon } from "tabler-icons-react";
-
 
 export interface NavbarItemProps {
   path: string;
@@ -25,23 +24,43 @@ const NavbarItem: React.FC<NavbarItemProps> = ({
       sx={(theme) => ({
         textDecoration: "none",
         "&:hover > div": {
-          backgroundColor: theme.colorScheme === "light" ? theme.colors.gray[1] : theme.colors.dark[8],
+          backgroundColor:
+            theme.colorScheme === "light"
+              ? "#F2F2F2"
+              : theme.colors.dark[8],
         },
-      })}
+      })
+    }
     >
       <Group
-        p='sm'
+        p="sm"
         sx={(theme) => ({
           transition: "all ease-in 300ms",
           borderRadius: theme.defaultRadius,
         })}
       >
-        <ThemeIcon variant="light" color={iconColor} radius="md">
-          <Icon size={20} />
+        <ThemeIcon
+          variant="light"
+          radius="md"
+          sx={(theme) => ({
+            backgroundColor: "transparent",
+          })}
+        >
+          <Icon size={24} color={iconColor} />
         </ThemeIcon>
-        <Text weight={500} sx={(theme) => ({
-            color: theme.colorScheme === "light" ? theme.colors.gray[7] : theme.colors.gray[3]
-        })}>{text}</Text>
+        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+          <Text
+            weight={500}
+            sx={(theme) => ({
+              color:
+                theme.colorScheme === "light"
+                  ? theme.colors.gray[7]
+                  : theme.colors.gray[3],
+            })}
+          >
+            {text}
+          </Text>
+        </MediaQuery>
       </Group>
     </Box>
   );

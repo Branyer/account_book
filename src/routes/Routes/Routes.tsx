@@ -6,6 +6,7 @@ import { LoadingOverlay } from "@mantine/core";
 import App from "../../App";
 import { RequireAuth } from "../ProtectedRoutes/RequireAuth";
 import Home from "../../pages/Home";
+import Goals from "../../pages/Goals";
 import NotFound from "../../pages/NotFound";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -23,6 +24,15 @@ export const RoutesComponents: React.FC = () => {
                 element={
                   <RequireAuth>
                     <Home />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/goals"
+                element={
+                  <RequireAuth>
+                    <Goals />
                   </RequireAuth>
                 }
               />

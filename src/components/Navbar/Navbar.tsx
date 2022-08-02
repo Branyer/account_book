@@ -11,22 +11,24 @@ const Navbar = ({ hidden }: { hidden: boolean }) => {
 
   return (
     <MantineNavbar
-      p="md"
       hiddenBreakpoint="sm"
       style={{ visibility: hidden ? "hidden" : "visible" }}
       hidden={!opened}
-      width={{ sm: 200, lg: 300 }}
+      width={{ sm: 60, lg: 80 }}
     >
       <MantineNavbar.Section grow>
-        <Stack>
+        <Stack
+          justify="space-around"
+          align="stretch"
+          p="md"
+          sx={(theme) => ({
+            height: "95%",
+          })}
+        >
           {items.map((item) => (
             <NavbarItem {...item} key={item.path} />
           ))}
         </Stack>
-      </MantineNavbar.Section>
-
-      <MantineNavbar.Section>
-        <NavbarAvatar />
       </MantineNavbar.Section>
     </MantineNavbar>
   );

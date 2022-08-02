@@ -25,7 +25,7 @@ function App() {
         asideOffsetBreakpoint="sm"
         header={<Header />}
         navbar={<Navbar hidden={!Boolean(snap.user)} />}
-        aside={<Aside hidden={!Boolean(snap.user)} />}
+        // aside={<Aside hidden={!Boolean(snap.user)} />}
         styles={{
           main:
             pathname === "/login"
