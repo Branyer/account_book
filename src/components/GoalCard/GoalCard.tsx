@@ -2,10 +2,11 @@ import {
   Box,
   Grid,
   Text,
-  Slider,
   Stack,
   ActionIcon,
   Group,
+  Progress,
+  Tooltip,
 } from "@mantine/core";
 import { Pencil, Trash } from "tabler-icons-react";
 import Title from "../Title";
@@ -16,14 +17,16 @@ interface GoalCardProps {
   description: string;
   currency: string;
   founds: number;
+  goal: number;
 }
 
-const GoalCard : React.FC<GoalCardProps> = ({
+const GoalCard: React.FC<GoalCardProps> = ({
   color,
   title,
   description,
   currency,
   founds,
+  goal,
 }) => {
   return (
     <>
@@ -68,22 +71,23 @@ const GoalCard : React.FC<GoalCardProps> = ({
             <Grid.Col span={4}>
               <Stack align="flex-end">
                 <Title color="#545759" weight={700} order={4}>
-                  {`${currency}${founds}`}
+                  {`${currency}${goal}`}
                 </Title>
               </Stack>
             </Grid.Col>
           </Grid>
 
-          <Slider
-            disabled
-            defaultValue={40}
-            size={14}
-            styles={(theme) => ({
-              bar: {
-                backgroundColor: color,
-              },
-            })}
-          ></Slider>
+          <Tooltip label={`${currency}${founds}`} withArrow>
+            <Progress
+              value={(founds * 100) / goal}
+              size={14}
+              styles={(theme) => ({
+                bar: {
+                  backgroundColor: color,
+                },
+              })}
+            />
+          </Tooltip>
         </Stack>
       </Box>
     </>

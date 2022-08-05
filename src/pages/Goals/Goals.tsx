@@ -6,16 +6,19 @@ import {
   MediaQuery,
   ActionIcon,
 } from "@mantine/core";
+import { useModals } from "@mantine/modals";
 import { Plus } from "tabler-icons-react";
 import Title from "../../components/Title";
 import GoalCard from "../../components/GoalCard";
+import GoalForm from "./components/GoalForm";
 
 const goals = [
   {
     id: 1,
     color: "#F8CA00",
     currency: "$",
-    founds: 2500,
+    founds: 850,
+    goal: 2500,
     title: "Goal",
     descripcion: "Description goal",
   },
@@ -23,7 +26,8 @@ const goals = [
     id: 2,
     color: "#F8CA00",
     currency: "$",
-    founds: 300,
+    founds: 100,
+    goal: 300,
     title: "Goal",
     descripcion: "Description goal",
   },
@@ -31,7 +35,8 @@ const goals = [
     id: 3,
     color: "#F8CA00",
     currency: "$",
-    founds: 500,
+    founds: 250,
+    goal: 500,
     title: "Goal",
     descripcion: "Description goal",
   },
@@ -39,7 +44,8 @@ const goals = [
     id: 4,
     color: "#F8CA00",
     currency: "$",
-    founds: 480,
+    founds: 350,
+    goal: 480,
     title: "Goal",
     descripcion: "Description goal",
   },
@@ -47,7 +53,8 @@ const goals = [
     id: 5,
     color: "#F8CA00",
     currency: "$",
-    founds: 480,
+    founds: 400,
+    goal: 480,
     title: "Goal",
     descripcion: "Description goal",
   },
@@ -55,13 +62,23 @@ const goals = [
     id: 6,
     color: "#F8CA00",
     currency: "$",
-    founds: 480,
+    founds: 243,
+    goal: 480,
     title: "Goal",
     descripcion: "Description goal",
   },
 ];
 
 const Goals = () => {
+  const modals = useModals();
+
+  const openContentModal = () => {
+    const id = modals.openModal({
+      title: <Title color="#00704B" order={2}>Goal</Title>,
+      children: <GoalForm closeModal={() => modals.closeModal(id)} />
+    });
+  };
+
   return (
     <Box
       sx={(theme) => ({
@@ -74,6 +91,7 @@ const Goals = () => {
         </Title>
         <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
           <Button
+            onClick={() => openContentModal()}
             styles={(theme) => ({
               root: {
                 backgroundColor: "#008A5C",
@@ -112,6 +130,7 @@ const Goals = () => {
                 founds={goal.founds}
                 currency={goal.currency}
                 color={goal.color}
+                goal={goal.goal}
               />
             ))
           : null}
