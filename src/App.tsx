@@ -23,7 +23,7 @@ function App() {
         fixed
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
-        header={<Header />}
+        header={<Header hidden={pathname === "/welcome"} />}
         navbar={<Navbar hidden={!Boolean(snap.user)} />}
         // aside={<Aside hidden={!Boolean(snap.user)} />}
         styles={{
@@ -35,6 +35,8 @@ function App() {
                   backgroundPosition: "bottom",
                   backgroundSize: "164vw 73vh",
                 }
+              : pathname === "/welcome"
+              ? { padding: 10, paddingTop: 0, paddingLeft: 0 }
               : undefined,
         }}
       >

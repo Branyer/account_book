@@ -7,7 +7,7 @@ import {
   useMantineTheme,
   Group,
   Text,
-  Image
+  Image,
 } from "@mantine/core";
 import { signOut } from "firebase/auth";
 
@@ -19,7 +19,7 @@ import { useNavbarContext } from "../Navbar/NavbarProvider/NavbarProvider";
 import { useQueryClient } from "react-query";
 import { useAuth } from "../../hooks/useAuth";
 
-const Header = () => {
+const Header = ({ hidden }: { hidden: boolean }) => {
   const queryClient = useQueryClient();
 
   const theme = useMantineTheme();
@@ -30,7 +30,12 @@ const Header = () => {
   const snap = useAuth();
 
   return (
-    <HeaderMantine height={70} p="md" sx={{backgroundColor: 'white', border: "none"}}>
+    <HeaderMantine
+      height={70}
+      p="md"
+      sx={{ backgroundColor: "white", border: "none" }}
+      style={{ visibility: hidden ? "hidden" : "visible" }}
+    >
       <div className="flex items-center h-full">
         {snap.user ? (
           <MediaQuery largerThan="sm" styles={{ display: "none" }}>
@@ -45,7 +50,9 @@ const Header = () => {
         ) : null}
         <Group className="justify-between w-full">
           <Group align="flex-end">
-            <Title order={2} weight={500}>Account Book</Title>
+            <Title order={2} weight={500}>
+              Account Book
+            </Title>
             <Image src="/images/icons/cerdo.svg" alt="logo" />
           </Group>
           <Group>

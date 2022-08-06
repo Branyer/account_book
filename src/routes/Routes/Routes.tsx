@@ -7,6 +7,7 @@ import App from "../../App";
 import { RequireAuth } from "../ProtectedRoutes/RequireAuth";
 import Home from "../../pages/Home";
 import Goals from "../../pages/Goals";
+import Welcome from "../../pages/Welcome";
 import NotFound from "../../pages/NotFound";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -37,6 +38,7 @@ export const RoutesComponents: React.FC = () => {
                 }
               />
 
+              <Route path="/welcome" element={<Welcome />} />
               <Route path="/login" element={<Login />} />
 
               <Route path="*" element={<NotFound />} />

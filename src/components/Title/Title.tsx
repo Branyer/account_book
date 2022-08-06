@@ -15,7 +15,7 @@ const Title: React.FC<TitleMantineProps & {weight?: number}> = ({
   return (
     <TitleMantine
       order={order}
-      sx={(theme) => ({ color: color, fontWeight: weight })}
+      sx={(theme) => ({ color: color, fontWeight: weight, fontFamily: "Poppins"})}
       {...props}
     >
       {children}
