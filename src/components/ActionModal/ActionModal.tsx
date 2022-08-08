@@ -7,7 +7,7 @@ import {
   NumberInput,
   InputWrapper,
   MultiSelect,
-  Textarea,
+  Textarea, TextInput, Select,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { v4 as uuidv4 } from "uuid";
@@ -52,11 +52,11 @@ export const ActionModal: React.FC<{
         queryClient.setQueryData(
           "transactions",
           (context as any).previousTodos
-          );
-        },
-        onSettled: () => {
-          queryClient.invalidateQueries(["transactions", snap.user?.uid]);
-          closeModal();
+        );
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["transactions", snap.user?.uid]);
+        closeModal();
       },
     }
   );
@@ -65,7 +65,7 @@ export const ActionModal: React.FC<{
     initialValues: {
       amount: "",
       currency: "USD",
-      tags: [],
+      tags: "",
       type,
       description: "",
       id: uuidv4(),
@@ -85,11 +85,11 @@ export const ActionModal: React.FC<{
           placeholder="0"
           label="Amount"
           formatter={(value) =>
-        !Number.isNaN(parseFloat(value))
-          ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',').replace( /[^0-9,]+/g, '')
-          : '0'
-      }
-          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+            !Number.isNaN(parseFloat(value))
+              ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',').replace(/[^0-9,]+/g, '')
+              : '0'
+          }
+          parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
           required
           {...form.getInputProps("amount")}
         />
@@ -107,32 +107,46 @@ export const ActionModal: React.FC<{
           />
         </InputWrapper>
 
-        <MultiSelect
-          label="Tags"
+        <TextInput
+          placeholder="Description"
+          {...form.getInputProps("description")}
+        />
+
+        <Select
+          placeholder="Category"
+          radius={5}
+          size={'sm'}
+          {...form.getInputProps("tags")}
+          data={[
+            { value: 'food', label: 'Food and drinks' },
+            { value: 'health', label: 'Health' },
+            { value: 'transport', label: 'Transport' },
+            { value: 'loan', label: 'Loan' },
+            { value: 'salary', label: 'Salary' },
+          ]}
+        />
+
+        {/*<MultiSelect
           maxSelectedValues={5}
           data={data}
-          placeholder="Create tags"
+          placeholder="Category"
           searchable
           creatable
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => setData((current) => [...current, query])}
           {...form.getInputProps("tags")}
-        />
-
-        <Textarea
-          placeholder="A description..."
-          label="Description"
-          {...form.getInputProps("description")}
-        />
+        />*/}
 
         <Button
           type="submit"
           mt="xl"
-          color={`${type === "Deposit" ? "green" : "red"}`}
-          variant={`${theme.colorScheme === "light" ? "filled" : "outline"}`}
+          sx={{
+            backgroundColor: '#00704B',
+            height: 51,
+          }}
           fullWidth
         >
-          Submit
+          Save
         </Button>
       </Stack>
     </form>

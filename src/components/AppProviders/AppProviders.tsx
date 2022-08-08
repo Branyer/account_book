@@ -51,7 +51,24 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
           withNormalizeCSS
           theme={{
             fontFamily: "Poppins",
-            defaultRadius: 8,
+            fontSizes: {
+              xl: 32,
+              lg: 28,
+              md: 24,
+              sm: 18,
+              xs: 14,
+            },
+            headings: {
+              fontFamily: 'Poppins',
+              sizes: {
+                h1: { fontWeight: 700, fontSize: 32, lineHeight: 1.5 },
+                h2: { fontWeight: 700, fontSize: 28, lineHeight: 1.5 },
+                h3: { fontWeight: 500, fontSize: 24, lineHeight: 1.5 },
+                h4: { fontWeight: 400, fontSize: 24, lineHeight: 1.5 },
+              }
+            },
+            black: '#565656',
+            defaultRadius: 12,
             colorScheme,
             primaryColor: "green"
           }}

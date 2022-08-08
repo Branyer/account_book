@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Card,
@@ -18,15 +17,20 @@ import ActionModal from "../ActionModal";
 import Title from "../Title";
 import { useQuery } from "react-query";
 import { useTransactions } from "../../hooks/useTransactions";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 const GlobalBalance = () => {
-  const query = useTransactions()
   const [currency, setCurrency] = useState("USD")
+  const { isSuccess: isTransactionSuccess, data: transactions } = useTransactions()
 
-  const balance = formatter(query.isSuccess ? currency == "COP" ?  (query.data as any).globalCOP : (query.data as any).globalUSD : 0, {
-    currency: currency,
-    style: "currency",
-  });
+  const balance = formatCurrency(
+    isTransactionSuccess ?
+      currency === 'COP' ?
+        transactions?.globalCOP :
+        transactions?.globalUSD :
+      0,
+    currency
+  )
 
   const modals = useModals();
   const theme = useMantineTheme();
@@ -35,7 +39,7 @@ const GlobalBalance = () => {
     const id = modals.openModal({
       title: <Title>{type}</Title>,
       children: (
-        <ActionModal type={type} closeModal={() => modals.closeModal(id)} />
+        <ActionModal type={type} closeModal={() => modals.closeModal(id)}/>
       ),
     });
   };

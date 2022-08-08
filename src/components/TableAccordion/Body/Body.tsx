@@ -98,15 +98,13 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
 
         const tagCell = (
           <DetailCell title="Tags">
-            <SimpleGrid cols={3} >
+            <SimpleGrid cols={3}>
 
-              {item.tags.map(tag => {
-
-                return (
-                  <Badge sx={{ width: "fit-content" }} size="sm">{tag}</Badge>
-                )
-
-              })}
+              {
+                (typeof item.tags === 'object') ?
+                  item.tags.map((tag: any) => <Badge sx={{ width: "fit-content" }} size="sm">{tag}</Badge>) :
+                  <Badge sx={{ width: "fit-content" }} size="sm">{item.tags}</Badge>
+              }
             </SimpleGrid>
           </DetailCell>
         )
@@ -130,7 +128,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
                 borderRadius: theme.defaultRadius,
               })}
             >
-              {formatter(item.amount, { notation: 'compact', currency: item.currency, style: 'currency' })} 
+              {formatter(item.amount, { notation: 'compact', currency: item.currency, style: 'currency' })}
             </Text>
           </DetailCell>
         );
@@ -142,7 +140,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
               <ThemeIcon sx={(theme) => ({
                 color: theme.colorScheme === "light" ? theme.colors.indigo[6] : theme.colors.indigo[2]
               })} variant="light">
-                <IconChevronDown size={20} />
+                <IconChevronDown size={20}/>
               </ThemeIcon>
             }
             label={
@@ -151,7 +149,8 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
                 <Text>{item.currency}</Text>
                 <Text>{item.date}</Text>
                 <Center>
-                  <Badge sx={{ width: "fit-content" }} color={item.type === "Deposit" ? "lime" : "red"}>{item.type}</Badge>
+                  <Badge sx={{ width: "fit-content" }}
+                         color={item.type === "Deposit" ? "lime" : "red"}>{item.type}</Badge>
                 </Center>
               </SimpleGrid>
             }
@@ -186,7 +185,7 @@ const StyledAccordion: React.FC<{ data: any[] }> = ({ data }) => {
   );
 
   return (
-    <Accordion iconPosition="right" classNames={classes} >
+    <Accordion iconPosition="right" classNames={classes}>
       {buildBody(data)}
     </Accordion>
   );
