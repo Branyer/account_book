@@ -47,57 +47,64 @@ const GlobalBalance = () => {
   return (
     <Card
       p="xl"
-      className="md:w-fit xs:w-full"
+      shadow="xl"
       mb="xl"
       sx={(theme) => ({
-        border: `1px solid ${
-          theme.colorScheme === "light"
-            ? theme.colors.gray[3]
-            : theme.colors.gray[8]
-        }`,
-        backgroundColor:
-          theme.colorScheme === "light"
-            ? theme.colors.gray[1]
-            : theme.colors.dark[9],
+        backgroundColor: "#E6F3EF"
       })}
     >
       <Stack>
         <Group className="justify-between">
           <div>
-            <Text>Global Balance</Text>
             <Text
-              weight={500}
-              sx={(_theme) => ({
-                fontSize: 40,
-              })}
+            color="#009664"
+            weight={700}
+            sx={(_theme) => ({
+              fontSize: 40,
+            })}
             >
               {balance.split(".")[0]}
               <sub className="bottom-0 text-base">.{balance.split(".")[1]}</sub>
             </Text>
+              <Text size="sm">Total Balance</Text>
           </div>
-          <SegmentedControl
+          {/* <SegmentedControl
             value={currency}
             onChange={setCurrency}
             data={[
               { label: "USD", value: "USD" },
               { label: "COP", value: "COP" },
             ]}
-          />
+          /> */}
         </Group>
-        <Group>
+        <Group position="right">
           <Button
-            color="green"
+             sx={{
+              padding: "10px 40px",
+              heigth: 30,
+              backgroundColor: "#008A5C",
+              '&:hover': {
+                backgroundColor: "#008A5C"
+              }
+            }}
             onClick={() => openContentModal("Deposit")}
             variant={`${theme.colorScheme === "light" ? "filled" : "outline"}`}
           >
-            Deposit
+            Income
           </Button>
           <Button
-            color="red"
+            sx={{
+              padding: "10px 40px",
+              heigth: 30,
+              backgroundColor: "#008A5C",
+              '&:hover': {
+                backgroundColor: "#008A5C"
+              }
+            }}
             onClick={() => openContentModal("Withdraw")}
             variant={`${theme.colorScheme === "light" ? "filled" : "outline"}`}
           >
-            Withdraw
+            Expense
           </Button>
         </Group>
       </Stack>

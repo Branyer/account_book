@@ -1,0 +1,1 @@
+export {RecentTransactions as default} from "./RecentTransactions"
