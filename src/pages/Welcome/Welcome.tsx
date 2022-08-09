@@ -99,7 +99,7 @@ const Welcome = () => {
                   },
                 })}
               >
-                Let get started
+                Lets get started
               </Button>
               <Button
                 onClick={() => navigate("/login")}

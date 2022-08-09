@@ -63,8 +63,8 @@ const Login = () => {
       <Center
         style={{ height: "100%" }}
         sx={(theme) => ({
-          backgroundColor: theme.white,
-          backgroundImage: "/images/backgrounds/back1.svg"
+          backgroundColor: 'transaparent',
+          // backgroundImage: "/images/backgrounds/back1.svg"
         })}
       >
         <Paper
