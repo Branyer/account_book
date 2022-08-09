@@ -6,8 +6,7 @@ import {
   useMantineTheme,
   NumberInput,
   InputWrapper,
-  MultiSelect,
-  Textarea, TextInput, Select,
+  TextInput, Select,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { v4 as uuidv4 } from "uuid";
@@ -15,7 +14,6 @@ import { v4 as uuidv4 } from "uuid";
 import { postTransaction } from "../../utils/firestoreUtils";
 import { useMutation, useQueryClient } from "react-query";
 import { useAuth } from "../../hooks/useAuth";
-import { formatter } from "../../utils/formatter";
 
 export const ActionModal: React.FC<{
   type: "Deposit" | "Withdraw";

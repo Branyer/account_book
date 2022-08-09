@@ -37,7 +37,7 @@ const GlobalBalance = () => {
 
   const openContentModal = (type: "Deposit" | "Withdraw") => {
     const id = modals.openModal({
-      title: <Title>{type}</Title>,
+      title: <Title>{(type === 'Deposit') ? 'Income' : 'Expense'}</Title>,
       children: (
         <ActionModal type={type} closeModal={() => modals.closeModal(id)}/>
       ),
