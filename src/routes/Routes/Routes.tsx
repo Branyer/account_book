@@ -11,6 +11,7 @@ import Welcome from "../../pages/Welcome";
 import NotFound from "../../pages/NotFound";
 import { useAuth } from "../../hooks/useAuth";
 import Transactions from "../../pages/Transactions";
+import Logs from "../../pages/Logs";
 
 export const RoutesComponents: React.FC = () => {
   const snap = useAuth();
@@ -50,6 +51,16 @@ export const RoutesComponents: React.FC = () => {
                   </RequireAuth>
                 }
               />
+
+              <Route
+                path="/logs"
+                element={
+                  <RequireAuth>
+                    <Logs />
+                  </RequireAuth>
+                }
+              />
+
 
               <Route path="*" element={<NotFound />} />
             </>

@@ -9,7 +9,6 @@ import StyledRow from "../../components/Transaction/StyledRow";
 
 const Transactions = () => {
   const { isSuccess: isTransactionSuccess, data: financialState } = useTransactions()
-
   const transactionsByDate = _.groupBy(financialState?.transactions, 'date')
   const transactionDays = _.keys(transactionsByDate)
 

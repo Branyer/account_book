@@ -4,7 +4,7 @@ import { Stack, Text } from "@mantine/core";
 interface DetailCellProps {
   title: string;
   children: React.ReactNode;
-  css: any
+  css?: any
 }
 
 const InfoCell: React.FC<DetailCellProps> = (
