@@ -76,26 +76,18 @@ export const getLogs = async (uid: string) => {
   if (!uid) {
     return { logs: [] };
   }
-  const q = query(
-    collection(db, "logs", uid, "logs"),
-    orderBy("date", "desc")
-  );
+  const q = query(collection(db, "logs" ));
+
+
 
   const querySnapshot = await getDocs(q);
 
+  
   let logs: any = [];
-
+  
   querySnapshot.forEach((doc) => {
-    let date: Date = doc.data().date.toDate();
     logs.push({
       ...doc.data(),
-      date: date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
     });
   });
 
@@ -124,7 +116,7 @@ export const postTransaction = async (
     date: Timestamp.now(),
   });
 
-  await addLog(`Adding Transaction (${type})`)
+  await addLog(`Adding Transaction (${type})`);
   customShowNotification("green", "Succesful transaction!");
 
   return true;

@@ -96,8 +96,8 @@ const Logs = () => {
       <ScrollArea style={{ height: 250 }}>
         <Box p="sm">
           {
-            logListPaginated.map((log: { date: string, action: string, user: string }) => (
-              <Grid gutter="xl">
+            logListPaginated.map((log: { date: string, action: string, user: string }, idx : any) => (
+              <Grid gutter="xl" key={idx}>
                 <Grid.Col span={4}>
                   <Text
                     size={'sm'}
@@ -123,6 +123,7 @@ const Logs = () => {
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
                     }}
+                    title={log?.action}
                   >
                     {log?.action}
                   </Text>
