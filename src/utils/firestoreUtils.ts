@@ -124,7 +124,7 @@ export const postTransaction = async (
     date: Timestamp.now(),
   });
 
-  addLog(`Adding Transaction (${type})`)
+  await addLog(`Adding Transaction (${type})`)
   customShowNotification("green", "Succesful transaction!");
 
   return true;
