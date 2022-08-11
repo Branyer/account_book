@@ -32,7 +32,8 @@ const Logs = () => {
   const [page, setPage] = useState(0)
   const handlePageChange = (newPage: number) => setPage(newPage - 1)
 
-  const logListPaginated = isSuccess ? applyPagination(applySearch(data?.logs, search), page, ROWS_PER_PAGE) : []
+  const logsFiltered = isSuccess ? applySearch(data?.logs, search) : []
+  const logListPaginated = applyPagination(logsFiltered, page, ROWS_PER_PAGE)
 
   return (
     <Box
@@ -49,7 +50,10 @@ const Logs = () => {
       <Input
         icon={<Search/>}
         variant="filled"
-        onChange={(event: any) => setSearch(event.target.value)}
+        onChange={(event: any) => {
+          setPage(0)
+          setSearch(event.target.value)
+        }}
         placeholder="Search User/Action"
         sx={{ marginBottom: 20 }}
       />
@@ -96,7 +100,7 @@ const Logs = () => {
       <ScrollArea style={{ height: 250 }}>
         <Box p="sm">
           {
-            logListPaginated.map((log: { date: string, action: string, user: string }, idx : any) => (
+            logListPaginated.map((log: { date: string, action: string, user: string }, idx: any) => (
               <Grid gutter="xl" key={idx}>
                 <Grid.Col span={4}>
                   <Text
@@ -154,7 +158,7 @@ const Logs = () => {
         <Pagination
           page={page + 1}
           onChange={handlePageChange}
-          total={Math.round(data?.logs.length / ROWS_PER_PAGE)}
+          total={Math.ceil(logsFiltered.length / ROWS_PER_PAGE)}
           size="xs"
           withEdges
         />
@@ -164,24 +168,3 @@ const Logs = () => {
 };
 
 export default Logs;
-
-const backUpLogs = [
-  { action: 'Login', user: 'Start', date: '8/7/2022, 11:30 PM' },
-  { action: 'Deposit', user: 'Rodrigo', date: '8/7/2022, 11:30 PM' },
-  { action: 'Withdraw', user: 'Sofia', date: '8/7/2022, 11:30 PM' },
-  { action: 'Savings', user: 'Omer', date: '8/7/2022, 11:30 PM' },
-  { action: 'Goal', user: 'Alejandro', date: '8/7/2022, 11:30 PM' },
-  { action: 'Logout', user: 'Priscila', date: '8/7/2022, 11:30 PM' },
-  { action: 'Login', user: 'Eran', date: '8/7/2022, 11:30 PM' },
-  { action: 'Deposit', user: 'Rodrigo', date: '8/7/2022, 11:30 PM' },
-  { action: 'Withdraw', user: 'Sofia', date: '8/7/2022, 11:30 PM' },
-  { action: 'Savings', user: 'Omer', date: '8/7/2022, 11:30 PM' },
-  { action: 'Goal', user: 'Alejandro', date: '8/7/2022, 11:30 PM' },
-  { action: 'Logout', user: 'Priscila', date: '8/7/2022, 11:30 PM' },
-  { action: 'Login', user: 'Eran', date: '8/7/2022, 11:30 PM' },
-  { action: 'Deposit', user: 'Rodrigo', date: '8/7/2022, 11:30 PM' },
-  { action: 'Withdraw', user: 'Sofia', date: '8/7/2022, 11:30 PM' },
-  { action: 'Savings', user: 'Omer', date: '8/7/2022, 11:30 PM' },
-  { action: 'Goal', user: 'Alejandro', date: '8/7/2022, 11:30 PM' },
-  { action: 'Logout', user: 'End', date: '8/7/2022, 11:30 PM' },
-]

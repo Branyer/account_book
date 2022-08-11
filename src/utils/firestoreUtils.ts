@@ -78,11 +78,8 @@ export const getLogs = async (uid: string) => {
   }
   const q = query(collection(db, "logs" ));
 
-
-
   const querySnapshot = await getDocs(q);
 
-  
   let logs: any = [];
   
   querySnapshot.forEach((doc) => {
