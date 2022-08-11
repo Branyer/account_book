@@ -26,9 +26,10 @@ import { useState } from "react";
 
 import auth from "../../states/auth";
 
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { customShowNotification } from "../../utils/showNotification";
 import { useAuth } from "../../hooks/useAuth";
+import { addLog } from "../../utils/addLog";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -84,10 +85,9 @@ const Login = () => {
                     values.email,
                     values.password
                   );
-
                   navigate(from === "/login" ? "/" : from, { replace: true });
-
                   customShowNotification("green", "User logged in!");
+                  addLog("Logged In", {user: values.email})
                 } catch (error: any) {
                   const errorMessage = error?.message;
 
@@ -102,6 +102,9 @@ const Login = () => {
                   );
 
                   await setDoc(doc(db, "users", userCredentials.user.uid), {});
+
+
+                  addLog("Register", {user: values.email })
 
                   await updateProfile(fireAuth.currentUser as User, {
                     displayName: values.displayName,

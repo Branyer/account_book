@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { customShowNotification } from "./showNotification";
 import { db } from "../firebase.config";
+import { addLog } from "./addLog";
 
 export const getTransactions = async (uid: string) => {
   if (!uid) {
@@ -123,6 +124,7 @@ export const postTransaction = async (
     date: Timestamp.now(),
   });
 
+  addLog(`Adding Transaction (${type})`)
   customShowNotification("green", "Succesful transaction!");
 
   return true;
