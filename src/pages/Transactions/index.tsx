@@ -1,15 +1,39 @@
-import React from 'react';
-import { ActionIcon, Box, MediaQuery, Stack, Text } from "@mantine/core";
+import React, { useRef, useState } from 'react';
+import { ActionIcon, Box, Input, MediaQuery, Stack, Text } from "@mantine/core";
 import Calendar from "../../icons/Calendar";
 import { useTransactions } from "../../hooks/useTransactions";
 import { formatCurrency } from "../../utils/formatCurrency";
 import BalanceHeader from "../../components/Transaction/BalanceHeader";
 import _ from "lodash";
 import StyledRow from "../../components/Transaction/StyledRow";
+import { Search } from "tabler-icons-react";
+
+const applySearch = (items: any, search: string) => items.filter((item: any) => {
+  if (search) {
+    let queryMatched = false
+    const properties = ['type', 'date', 'tags']
+    properties.forEach((property) => {
+      if ((item[property]).toLowerCase().includes(search.toLowerCase())) {
+        queryMatched = true
+      }
+    })
+
+    if (!queryMatched) {
+      return false
+    }
+  }
+
+  return true
+})
+
 
 const Transactions = () => {
+  const [search, setSearch] = useState('')
   const { isSuccess: isTransactionSuccess, data: financialState } = useTransactions()
-  const transactionsByDate = _.groupBy(financialState?.transactions, 'date')
+  const queryRef = useRef(null);
+  const transactionFiltered = isTransactionSuccess ? applySearch(financialState?.transactions, search) : []
+
+  const transactionsByDate = _.groupBy(transactionFiltered, 'date')
   const transactionDays = _.keys(transactionsByDate)
 
   const totalByDay = (items: any) => _.reduce(items, function (sum, n) {
@@ -22,6 +46,11 @@ const Transactions = () => {
       0,
     'USD'
   )
+
+  const handleQueryChange = (event: any) => {
+    event.preventDefault();
+    setSearch(queryRef.current?.value);
+  }
 
   return (
     <Box
@@ -45,6 +74,20 @@ const Transactions = () => {
         title={'Balance'}
         balance={balance}
       />
+
+      <Box
+        component={'form'}
+        onSubmit={handleQueryChange}
+      >
+        <Input
+          defaultValue={search}
+          icon={<Search/>}
+          variant="filled"
+          ref={queryRef}
+          placeholder="Search Date/Action"
+          sx={{ marginBottom: 20 }}
+        />
+      </Box>
 
       {
         transactionDays.map((day: string) => (

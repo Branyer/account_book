@@ -8,7 +8,7 @@ const applyPagination = (items: any, page: number, rowsPerPage: number) => items
 const applySearch = (items: any, search: string) => items.filter((item: any) => {
   if (search) {
     let queryMatched = false
-    const properties = ['user', 'action']
+    const properties = ['user', 'action', 'date']
     properties.forEach((property) => {
       if ((item[property]).toLowerCase().includes(search.toLowerCase())) {
         queryMatched = true
@@ -54,7 +54,7 @@ const Logs = () => {
           setPage(0)
           setSearch(event.target.value)
         }}
-        placeholder="Search User/Action"
+        placeholder="Search by User, Action or Date"
         sx={{ marginBottom: 20 }}
       />
       <Grid
@@ -71,7 +71,7 @@ const Logs = () => {
           }
         })}
       >
-        <Grid.Col span={4}>
+        <Grid.Col sm={3} span={4}>
           <Text
             size={'sm'}
             sx={{ color: '#727273', marginLeft: 15 }}
@@ -79,7 +79,7 @@ const Logs = () => {
             Date
           </Text>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col sm={5} span={4}>
           <Text
             size={'sm'}
             sx={{ color: '#727273' }}
@@ -102,7 +102,7 @@ const Logs = () => {
           {
             logListPaginated.map((log: { date: string, action: string, user: string }, idx: any) => (
               <Grid gutter="xl" key={idx}>
-                <Grid.Col span={4}>
+                <Grid.Col sm={3} span={4}>
                   <Text
                     size={'sm'}
                     sx={{
@@ -117,16 +117,18 @@ const Logs = () => {
                   </Text>
                 </Grid.Col>
 
-                <Grid.Col span={4}>
+                <Grid.Col sm={5} span={4}>
                   <Text
                     size={'sm'}
-                    sx={{
+                    sx={(theme) => ({
                       color: '#727273',
-                      maxWidth: '20ch',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
-                    }}
+                      [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                        maxWidth: '20ch',
+                      }
+                    })}
                     title={log?.action}
                   >
                     {log?.action}
